@@ -8,7 +8,11 @@ const Board = ({ value, onClickingTic }) => {
       {value.map((selections, i) => {
         console.log(selections);
         return (
-          <Box key={i} value={selections} onClick={() => onClickingTic(i)} />
+          <Box
+            key={i}
+            value={selections}
+            onClickingTic={() => onClickingTic(i)}
+          />
         );
       })}
     </div>

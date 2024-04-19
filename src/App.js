@@ -2,17 +2,20 @@ import { useState } from "react";
 import Board from "./components/Board";
 
 function App() {
-  // const [totalBox, setTotalBox] = useState(Array(9).fill(null));
-  const totalBox = ["X", "O", "X", "O", "X", "O", "X", "O", "X"];
+  const [totalBox, setTotalBox] = useState(Array(9).fill(null));
+  const [xPlay, setXPlay] = useState(true);
+  // const totalBox = ["X", "O", "X", "O", "X", "O", "X", "O", "X"];
 
   const handleClick = (id) => {
-    // const updatedBox = totalBox.map((item, index) => {
-    //   if (index === id) {
-    //     return "X";
-    //   } else return item;
-    // });
+    const updatedBox = totalBox.map((item, index) => {
+      console.log(index, id);
+      if (index === id) {
+        return xPlay == true ? "X" : "O";
+      } else return item;
+    });
     // console.log([...totalBox, ...updatedBox]);
-    // setTotalBox([...totalBox, updatedBox]);
+    setTotalBox(updatedBox);
+    setXPlay(!xPlay);
   };
 
   return (
