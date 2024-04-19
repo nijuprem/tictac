@@ -5,6 +5,7 @@ function App() {
   const [totalBox, setTotalBox] = useState(Array(9).fill(null));
   const [xPlay, setXPlay] = useState(true);
   const [winner, setWinner] = useState(null);
+  const [stopGame, setStopGame] = useState(false);
   // const totalBox = ["X", "O", "X", "O", "X", "O", "X", "O", "X"];
 
   const winningCheck = [
@@ -42,6 +43,7 @@ function App() {
       const [x, y, z] = winningCheck[i];
       // console.log("X ", check[x], " Y ", check[y], " Z ", check[z]);
       if (check[x] && check[x] === check[y] && check[y] === check[z]) {
+        setStopGame(true);
         return check[x];
       }
     }
@@ -51,6 +53,7 @@ function App() {
     setTotalBox(Array(9).fill(null));
     setXPlay(true);
     setWinner(null);
+    setStopGame(false);
   };
 
   return (
@@ -62,7 +65,10 @@ function App() {
         alignItems: "center",
       }}
     >
-      <Board value={totalBox} onClickingTic={handleClick} />
+      <Board
+        value={totalBox}
+        onClickingTic={stopGame ? resetGame : handleClick}
+      />
 
       <button
         style={{ padding: "1rem", marginTop: "1rem" }}

@@ -11,7 +11,7 @@ const Board = ({ value, onClickingTic }) => {
           <Box
             key={i}
             value={selections}
-            onClickingTic={() => onClickingTic(i)}
+            onClickingTic={() => value && onClickingTic(i)}
           />
         );
       })}
