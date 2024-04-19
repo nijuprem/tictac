@@ -4,23 +4,73 @@ import Board from "./components/Board";
 function App() {
   const [totalBox, setTotalBox] = useState(Array(9).fill(null));
   const [xPlay, setXPlay] = useState(true);
+  const [winner, setWinner] = useState(null);
   // const totalBox = ["X", "O", "X", "O", "X", "O", "X", "O", "X"];
+
+  const winningCheck = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
 
   const handleClick = (id) => {
     const updatedBox = totalBox.map((item, index) => {
-      console.log(index, id);
+      // console.log(index, id);
       if (index === id) {
         return xPlay == true ? "X" : "O";
       } else return item;
     });
-    // console.log([...totalBox, ...updatedBox]);
     setTotalBox(updatedBox);
+    const winner = checkWinner(updatedBox);
+    // console.log(winner);
+    if (winner == "X") {
+      setWinner("X");
+    } else if (winner == "O") {
+      setWinner("O ");
+    }
+
     setXPlay(!xPlay);
   };
 
+  const checkWinner = (check) => {
+    for (let i = 0; i < winningCheck.length; i++) {
+      const [x, y, z] = winningCheck[i];
+      // console.log("X ", check[x], " Y ", check[y], " Z ", check[z]);
+      if (check[x] && check[x] === check[y] && check[y] === check[z]) {
+        return check[x];
+      }
+    }
+  };
+
+  const resetGame = () => {
+    setTotalBox(Array(9).fill(null));
+    setXPlay(true);
+    setWinner(null);
+  };
+
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        // justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <Board value={totalBox} onClickingTic={handleClick} />
+
+      <button
+        style={{ padding: "1rem", marginTop: "1rem" }}
+        onClick={resetGame}
+      >
+        Reset
+      </button>
+      {winner && <p>{winner} WON</p>}
     </div>
   );
 }
